@@ -1,0 +1,79 @@
+import React from 'react'
+import StudentCard  from './studentCard'
+
+class studentprofile extends React.Component {
+    constructor(props) {
+        super(props)
+
+        this.state = {
+            firstName: '',
+            lastName: '',
+            phoneNumber: '',
+            email: '',
+            isStudent: false,
+        }
+    }
+
+     handleSubmit = (event) =>{
+        event.preventDefault()
+        const Data = this.state
+        console.log("profile: ", Data)
+
+        fetch('https://webhook.site/6ad065df-3619-4903-bd5b-dcd1c4e9dcc4', {
+                method: 'post',
+                mode: 'no-cors',
+                headers: {
+                    'Content-type' : 'application/json'
+                },
+                body: JSON.stringify(Data)
+            }).then(res =>{
+                return res.json()
+            }).then(data => console.log(data))
+    }
+
+
+    handleInputChange = (event) =>{
+        event.preventDefault()
+        this.setState({
+            [event.target.name] : event.target.value
+        })
+    }
+
+    handleCheck = (event) =>{
+        event.preventDefault()
+        this.setState({
+            [event.target.name] : event.target.checked
+        })
+    }
+
+    
+    // A different way to handle input change
+    // handleFirstnameChange = (event) =>{
+    //     event.preventDefault()
+    //     this.setState({
+    //         firstName: event.target.value
+    //     })
+    // }
+    
+
+    render() {
+        return (
+            <div> 
+                 <form onSubmit= {this.handleSubmit}>
+                    <p><input type="text" placeholder="First Name" name='firstName' onChange={this.handleInputChange}/></p>
+                    <p><input type="text" placeholder="Last Name" name='lastName' onChange={this.handleInputChange}/></p>
+                    <p><input type="text" placeholder="Phone Number" name='phoneNumber' onChange={this.handleInputChange}/></p>
+                    <p><input type="text" placeholder="Email" name='email' onChange={this.handleInputChange}/></p>
+                    <p><input type="checkbox" name='isStudent' onChange={this.handleCheck}/>Are you a student</p>
+                    <p><button>OK</button></p>
+                </form>
+		
+                <br/>
+                <br/>
+                <StudentCard />
+            </div>
+        )
+    }
+}
+
+export default studentprofile
