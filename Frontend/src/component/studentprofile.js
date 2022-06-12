@@ -1,16 +1,22 @@
-import React from 'react'
+import React  from 'react'
 import StudentCard  from './studentCard'
 import styled from 'styled-components'
+import axios from 'axios'
 
 const MainContainer = styled.div`
    display: flex;
    justify-content: center;
 
   .input{
-        margin-bottom: 5px;
-        width:100%;
+        margin: 2rem;
+        padding: 3px ;
+        width:50%;
         text-align: center;
-    }
+        margin-left: 25% ;
+        background: black;
+        color: whitesmoke;
+        border: 1px solid white ;
+        }
 
   .flex-container{
         display: flex;
@@ -23,6 +29,13 @@ const MainContainer = styled.div`
         margin: 10px;
         margin-left: 50px;
         text-align: center;
+        cursor: pointer;
+        transition:transform 200ms ease-in, color 200ms ease-in;
+        &:hover{
+            transform: scale(1.02) ;
+            background: #750909;
+            color: whitesmoke;
+        }
     }
 
 `
@@ -37,6 +50,8 @@ class studentprofile extends React.Component {
         }
     }
 
+   
+
     updateSearch = (event) => {
         this.setState({
             search: event.target.value.substr(0,20)
@@ -44,15 +59,12 @@ class studentprofile extends React.Component {
     }
 
  
-    componentDidMount(){
-        fetch('https://www.hatchways.io/api/assessment/students')
-        .then(response => response.json())
-        .then(data => {
-            Object.values(data).map(student =>(
-                this.setState({
-                    students: student
-                })
-            ))
+    componentDidMount = () =>{
+        axios.get('/getStudentDetails').then(response =>{
+            this.setState({
+                students:response.data
+            })
+            console.log(response.data);
         })
     }
         
@@ -61,7 +73,6 @@ class studentprofile extends React.Component {
         let filteredStudents = this.state.students.filter(
             (student) =>{
                 return student.firstName.toLowerCase().indexOf(this.state.search.toLowerCase()) !== -1
-                //student.lastName.indexOf(this.state.search)
             }
         )
 
@@ -72,7 +83,7 @@ class studentprofile extends React.Component {
         return (
                 <MainContainer>
                     <div>
-                        <input type="text" className='input' placeholder="Search By Name" value={this.state.search} onChange={this.updateSearch.bind(this)}  width="100%"/>
+                        <input type="text" className='input' placeholder="Search By Name" value={this.state.search} onChange={this.updateSearch.bind(this)}  autoFocus/>
                         <div className='flex-container' >
                         {Students}
                         </div>

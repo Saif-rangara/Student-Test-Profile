@@ -9,6 +9,12 @@ const StyledCard = styled.div`
     display:flex;
     justify-content: center;
 
+    .img{
+        height: 15rem;
+        width:100% ;
+        object-fit: cover;
+    }
+
     .title{
         font-size: 30px;
         font-family: 'Berkshire Swash', cursive;
@@ -52,7 +58,7 @@ class studentCard extends Component {
             <StyledCard>
             <div>
                 <Card key={this.props.student.id} className="">
-                    <CardImg  className="img" width="100%" height="10%" src={this.props.student.pic} alt="Card image cap" />
+                    <CardImg  className="img" src={this.props.student.pic} alt="Card image cap" />
                     
                         <CardTitle className="title">{this.props.student.firstName}{this.props.student.lastName}</CardTitle>
                         <CardSubtitle className="p">{this.props.student.email}</CardSubtitle>

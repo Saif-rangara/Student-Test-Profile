@@ -1,0 +1,11 @@
+body{
+  background: linear-gradient(
+    90deg,
+    rgb(145, 27, 9) 0%,
+    rgb(209, 75, 34) 100%
+  );
+}
+
+h1{
+  font-family: 'Berkshire Swash', cursive;
+}
